@@ -1,0 +1,31 @@
+# https://hiltmon.com/blog/2013/07/03/a-simple-c-plus-plus-project-structure/
+
+COMPILER := g++
+
+SOURCE_DIRECTORY := src
+HEADER_DIRECTORY := hdr
+BUILD_DIRECTORY := bld
+TARGET_EXECUTABLE := Pong
+
+SOURCE_EXTENSION = cpp
+OBJECT_EXTENSION = o
+
+SOURCE_FILES := $(shell find $(SOURCE_DIRECTORY) -type f -name *.$(SOURCE_EXTENSION))
+OBJECT_FILES := $(patsubst $(SOURCE_DIRECTORY)/%,$(BUILD_DIRECTORY)/%,$(SOURCE_FILES:.$(SOURCE_EXTENSION)=.$(OBJECT_EXTENSION)))
+
+COMPILER_FLAGS := -std=c++17 -Wall -I $(HEADER_DIRECTORY)
+LIBRARY_FLAGS := -l SDL2 -l SDL2_ttf -l SDL2_mixer -l stdc++fs
+
+
+$(TARGET_EXECUTABLE): $(OBJECT_FILES)
+	$(COMPILER) $^ -o $@ $(LIBRARY_FLAGS)
+
+
+$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.$(SOURCE_EXTENSION)
+	@mkdir -p $(BUILD_DIRECTORY)
+	$(COMPILER) $(COMPILER_FLAGS) -c $< -o $@
+
+
+.PHONY: clean
+clean:
+	$(RM) -r -v -I --preserve-root $(BUILD_DIRECTORY) $(TARGET_EXECUTABLE)
