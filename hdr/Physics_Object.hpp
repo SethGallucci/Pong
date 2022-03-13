@@ -3,7 +3,6 @@
 
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 
 #include "Spacial_Object.hpp"
 

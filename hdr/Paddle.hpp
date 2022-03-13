@@ -2,7 +2,6 @@
 #define PADDLE_H
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 
 #include "Physics_Object.hpp"
 
